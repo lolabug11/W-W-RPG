@@ -2,24 +2,32 @@ import time as t
 player_class =  None
 player_level = 1
 choice = None
-def punch(player_level, enemey_health):
+base_goblin_health = 10
+sof = input('Do you want the text to go slow or fast: ')
+
+def punch(level, enemey_health):
     damage_delt = level*2.5
     enemey_health =  enemey_health - damage_delt
-    return 
-def slowprint(text):
-    if '. . .' in text:
-        for char in text:
-            if char == '.':
+    return enemey_health, damage_delt
+if 'f' in sof:
+
+    def slowprint(text):
+        if '. . .' in text:
+            for char in text:
+                if char == '.':
+                    print(char, end = '')
+                    t.sleep(0.5)
+                else:
+                    print(char, end = '')
+                    t.sleep(.11)
+        else:
+            for char in text:
                 print(char, end = '')
-                t.sleep(0.5)
-            else:
-                print(char, end = '')
-                t.sleep(.11)
-    else:
-        for char in text:
-            print(char, end = '')
             t.sleep(0.11)
-    print()
+        print()
+else:
+    def slowprint(text):
+        print(text)
 def classslect():
     slowprint('What class do you want: ')
     player_class = input()
@@ -28,7 +36,7 @@ def starter_quest():
     slowprint('Bartender: Hello their, I have a quest for you if your willing to take it (y/n): ')
     choice = input()
     if 'y' in choice:
-        slowprint('Thank you so much, there are some goblins out side the bar you might have saw them can you get rid of them (y/n)?')
+        slowprint('Thank you so much, there are some goblins out side the bar you might have seen them can you get rid of them (y/n)?')
         choice = input()
         if 'y' in choice:
             slowprint('Quest accepted')
@@ -37,7 +45,11 @@ def starter_quest():
             choice = input()
             if 'a' in choice:
                 slowprint('You throw a punch at the goblin . . .')
-    return print
+                enemey_health, damage_delt = punch(player_level, base_goblin_health)
+                slowprint("you did " + str(damage_delt)+" damage they now have "+str(enemey_health))
+                slowprint('Do you want to attack again or run away? ')
+                choice = input()
+    return print()
 
 def main():
     starter_quest()
